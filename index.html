@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>For My Favorite Colleague ✨</title>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --peach: #ffecd2;
+            --pink: #fcb69f;
+            --glass: rgba(255, 255, 255, 0.25);
+            --text: #4a4a4a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--peach) 0%, var(--pink) 100%);
+            color: var(--text);
+            overflow-x: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .screen {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .active { display: flex; animation: fadeIn 0.8s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Glass Card Style */
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 25px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            width: 90%;
+            max-width: 350px;
+        }
+
+        h1 { font-family: 'Dancing Script', cursive; font-size: 2.4rem; color: #d63031; margin-bottom: 10px; }
+        p { font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px; }
+
+        button {
+            background: #ff7675;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            box-shadow: 0 4px 15px rgba(214, 48, 49, 0.3);
+            cursor: pointer;
+        }
+
+        /* Hero Image */
+        .hero-frame {
+            width: 220px;
+            height: 300px;
+            border: 8px solid white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            margin-bottom: 20px;
+            transform: rotate(-2deg);
+        }
+        .hero-frame img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* Flashcards */
+        .card-stack { width: 100%; display: flex; flex-direction: column; gap: 15px; }
+        .flashcard {
+            background: white;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .card-inner-hidden { display: none; color: #ff7675; font-weight: 600; margin-top: 10px; }
+
+        /* Jigsaw Puzzle */
+        .puzzle-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4px;
+            width: 270px;
+            height: 270px;
+            margin: 20px 0;
+            border: 4px solid white;
+            background: white;
+        }
+        .tile {
+            width: 88px; height: 88px;
+            background-size: 270px 270px;
+            border-radius: 2px;
+        }
+
+        /* Scratch Card */
+        #scratch-container {
+            position: relative;
+            width: 280px; height: 380px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        #scratch-canvas {
+            position: absolute; top: 0; left: 0; z-index: 2;
+            cursor: crosshair;
+        }
+        .final-photo { width: 100%; height: 100%; object-fit: cover; z-index: 1; }
+
+        /* Floating Hearts Decor */
+        .heart {
+            position: fixed; color: rgba(255, 118, 117, 0.4);
+            font-size: 20px; z-index: -1; animation: float 6s infinite linear;
+        }
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Audio (Hidden) -->
+    <audio id="bgMusic" loop>
+        <!-- Using a soulful Lofi Indian track (Raatan Lambiyan Slowed) -->
+        <source src="https://www.chosic.com/wp-content/uploads/2021/07/The-Weekend-Lofi-Version.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Screen 1: Login -->
+    <section id="screen1" class="screen active">
+        <div class="glass-card">
+            <h1>Office Login 🏢</h1>
+            <p>Welcome back, Vrima. Please clock in to start your special shift.</p>
+            <input type="password" id="passInput" placeholder="Password (Hint: DDMM)" 
+                   style="width: 100%; padding: 12px; border-radius: 10px; border: none; margin-bottom: 15px; text-align: center;">
+            <button onclick="checkPass()">Clock In</button>
+        </div>
+    </section>
+
+    <!-- Screen 2: Hero Intro -->
+    <section id="screen2" class="screen">
+        <div class="hero-frame">
+            <img src="Vrima 1.jpeg" alt="Beautiful Vrima">
+        </div>
+        <h1>Hey beautiful...</h1>
+        <p>I know we were colleagues, but you were always the most productive distraction I ever had.</p>
+        <button onclick="showScreen(3)">Continue... ✨</button>
+    </section>
+
+    <!-- Screen 3: Flashcards -->
+    <section id="screen3" class="screen">
+        <h1>For You, Vrima ❤️</h1>
+        <div class="card-stack">
+            <div class="flashcard" onclick="flip(this)">
+                <div>About your height... 📏</div>
+                <div class="card-inner-hidden">You aren't short, you're just "concentrated cute." Perfect for hugging.</div>
+            </div>
+            <div class="flashcard" onclick="flip(this)">
+                <div>That office smile... 😊</div>
+                <div class="card-inner-hidden">My 9-to-5 was only bearable because I got to see you every day.</div>
+            </div>
+            <div class="flashcard" onclick="flip(this)">
+                <div>Truly beautiful... 🌹</div>
+                <div class="card-inner-hidden">Chubby, cute, and absolutely stunning. You are a masterpiece, Vrima.</div>
+            </div>
+        </div>
+        <button onclick="showScreen(4)" style="margin-top: 25px;">Ready for a game? 🧩</button>
+    </section>
+
+    <!-- Screen 4: Jigsaw Puzzle -->
+    <section id="screen4" class="screen">
+        <h1>Pieces of You</h1>
+        <p>Sort the pieces of my favorite view!</p>
+        <div class="puzzle-grid" id="puzzleGrid"></div>
+        <p id="puzzleHint" style="font-size: 0.8rem; color: #ff7675;">Tap tiles to swap them!</p>
+        <button id="puzzleNext" onclick="showScreen(5)" style="display:none;">Perfect! Next ❤️</button>
+    </section>
+
+    <!-- Screen 5: Scratch Card -->
+    <section id="screen5" class="screen">
+        <h1>A Secret Message 💌</h1>
+        <div id="scratch-container">
+            <img src="Vrima 3.jpeg" class="final-photo">
+            <canvas id="scratch-canvas" width="280" height="380"></canvas>
+        </div>
+        <div id="finalMsg" style="display:none;">
+            <h1 style="font-size: 1.5rem;">Happy Friendship Day!</h1>
+            <p>From office coffee runs to becoming someone special... I'm glad I have you. <br><br> <b>Love, Gaurish</b></p>
+        </div>
+    </section>
+
+    <script>
+        // 1. NAVIGATION & MUSIC
+        function showScreen(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById('screen' + id).classList.add('active');
+            if(id === 4) initPuzzle();
+            if(id === 5) initScratch();
+        }
+
+        function checkPass() {
+            // Replace '1234' with her actual birthday DDMM
+            if(document.getElementById('passInput').value === '1234') {
+                document.getElementById('bgMusic').play();
+                showScreen(2);
+                createHearts();
+            } else {
+                alert("Hint: It's your birthday! (DDMM)");
+            }
+        }
+
+        function flip(el) {
+            el.querySelector('.card-inner-hidden').style.display = 'block';
+            el.style.transform = "scale(1.05)";
+        }
+
+        // 2. PUZZLE LOGIC (3x3 Swap)
+        let tiles = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+        function initPuzzle() {
+            const grid = document.getElementById('puzzleGrid');
+            tiles.sort(() => Math.random() - 0.5);
+            renderTiles();
+        }
+
+        function renderTiles() {
+            const grid = document.getElementById('puzzleGrid');
+            grid.innerHTML = '';
+            tiles.forEach((tileIdx, currentPos) => {
+                const div = document.createElement('div');
+                div.className = 'tile';
+                div.style.backgroundImage = "url('Vrima 2.jpeg')";
+                div.style.backgroundPosition = `${-(tileIdx % 3) * 90}px ${-Math.floor(tileIdx / 3) * 90}px`;
+                div.onclick = () => swap(currentPos);
+                grid.appendChild(div);
+            });
+        }
+
+        function swap(pos) {
+            let next = (pos + 1) % 9;
+            [tiles[pos], tiles[next]] = [tiles[next], tiles[pos]];
+            renderTiles();
+            if(tiles.every((val, i) => val === i)) {
+                document.getElementById('puzzleNext').style.display = 'block';
+                document.getElementById('puzzleHint').innerText = "Look how beautiful! 😍";
+            }
+        }
+
+        // 3. SCRATCH CARD LOGIC
+        function initScratch() {
+            const canvas = document.getElementById('scratch-canvas');
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#C0C0C0';
+            ctx.fillRect(0, 0, 280, 380);
+            ctx.font = "bold 20px Poppins";
+            ctx.fillStyle = "#666";
+            ctx.fillText("Scratch to reveal", 50, 180);
+            ctx.fillText("my heart... ❤️", 70, 210);
+
+            let isPressed = false;
+            const scratch = (e) => {
+                if(!isPressed) return;
+                const rect = canvas.getBoundingClientRect();
+                const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+                const y = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.beginPath(); ctx.arc(x, y, 35, 0, Math.PI * 2); ctx.fill();
+                setTimeout(() => { document.getElementById('finalMsg').style.display = 'block'; }, 2000);
+            };
+
+            canvas.addEventListener('mousedown', () => isPressed = true);
+            canvas.addEventListener('touchstart', () => isPressed = true);
+            window.addEventListener('mouseup', () => isPressed = false);
+            window.addEventListener('touchend', () => isPressed = false);
+            canvas.addEventListener('mousemove', scratch);
+            canvas.addEventListener('touchmove', scratch);
+        }
+
+        // 4. DECORATION
+        function createHearts() {
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.innerHTML = '❤️';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 6000);
+            }, 500);
+        }
+    </script>
+</body>
+</html>
